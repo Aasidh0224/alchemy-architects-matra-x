@@ -15,6 +15,7 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    timeout-minutes: 8
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,7 +39,7 @@ jobs:
       - name: Capture live application
         env:
           MATRA_X_LIVE_URL: https://matra-x-vision-core.base44.app/
-        run: node tools/capture_live_demo.mjs
+        run: timeout 150s node tools/capture_live_demo.mjs
       - name: Find raw video
         id: raw
         run: |
