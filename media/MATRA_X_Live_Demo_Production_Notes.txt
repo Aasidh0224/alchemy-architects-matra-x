@@ -1,4 +1,3 @@
 Source: https://matra-x-vision-core.base44.app/
 Video target: 3840x2160 UHD, 30 fps, 60 seconds, H.264.
 Audio: cinematic 5.1 AAC mix with centered narration.
-This is not a true Dolby Atmos object-based master. Dedicated Atmos authoring/encoding is required for Atmos metadata.
