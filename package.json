@@ -1,0 +1,7 @@
+{
+  "name":"matra-x-sih2026-submission",
+  "private":true,
+  "version":"1.0.0",
+  "scripts":{"capture:demo":"node tools/capture_live_demo.mjs"},
+  "devDependencies":{"playwright":"latest"}
+}

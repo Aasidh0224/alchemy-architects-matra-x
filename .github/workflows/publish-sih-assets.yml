@@ -1,0 +1,81 @@
+name: Publish SIH Assets
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'scripts/**'
+      - 'tools/**'
+      - '.github/workflows/publish-sih-assets.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: |
+          pip install reportlab
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg espeak
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - name: Build reports
+        run: python scripts/build_pdfs.py
+      - name: Capture live application
+        env:
+          MATRA_X_LIVE_URL: https://matra-x-vision-core.base44.app/
+        run: node tools/capture_live_demo.mjs
+      - name: Find raw video
+        id: raw
+        run: |
+          VIDEO=$(find media/raw -maxdepth 1 -type f -name '*.webm' | head -n 1)
+          test -n "$VIDEO"
+          echo "path=$VIDEO" >> "$GITHUB_OUTPUT"
+      - name: Create narration
+        run: |
+          cat > /tmp/narration.txt <<'EOF'
+          MATRA-X is Alchemy Architects' material intelligence and governance platform for SIH26099.
+          It turns fragmented CPSE material records into structured Engineering DNA containing dimensions, grades, standards, units and critical attributes.
+          Its hybrid matching engine uses semantic retrieval together with structured technical checks.
+          The False-Merge Firewall blocks unsafe consolidation when critical engineering attributes conflict.
+          Evidence from master records and technical documents can be reconciled, while human governance preserves the approval trail.
+          LIORA, the MATRA-X Material Intelligence Copilot, retrieves governed context before explaining matches, errors, legacy mappings and analytics.
+          MATRA-X moves beyond cleanup by creating canonical identities, preserving source traceability and preventing new duplicate creation.
+          EOF
+          espeak -w /tmp/narration.wav -s 152 -p 35 -v en-us /tmp/narration.txt
+      - name: Create 4K video
+        run: |
+          ffmpeg -y -i "${{ steps.raw.outputs.path }}" -vf "scale=3840:2160:force_original_aspect_ratio=increase,crop=3840:2160,format=yuv420p,fade=t=in:st=0:d=0.8,fade=t=out:st=59.2:d=0.8,drawtext=fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf:text='MATRA-X | SIH26099 | LIVE DEMO':fontcolor=white@0.86:fontsize=58:x=90:y=90" -t 60 -r 30 -c:v libx264 -preset medium -crf 20 -an /tmp/matra_video.mp4
+          ffmpeg -y -i /tmp/narration.wav -f lavfi -i "aevalsrc=0.06*sin(2*PI*55*t)+0.025*sin(2*PI*110*t):s=48000:d=60" -filter_complex "[0:a]apad,pan=5.1|FL=0.12*c0|FR=0.12*c0|FC=1*c0|LFE=0*c0|BL=0.06*c0|BR=0.06*c0,volume=1.15[v];[1:a]pan=5.1|FL=0.55*c0|FR=0.55*c0|FC=0.12*c0|LFE=0.18*c0|BL=0.45*c0|BR=0.45*c0,volume=0.8[m];[v][m]amix=inputs=2:duration=longest:dropout_transition=2,alimiter=limit=0.92[out]" -map "[out]" -t 60 -ar 48000 -ac 6 /tmp/mix.aac -y
+          ffmpeg -y -i /tmp/matra_video.mp4 -i /tmp/mix.aac -map 0:v:0 -map 1:a:0 -c:v copy -c:a aac -b:a 512k -ac 6 -movflags +faststart media/MATRA_X_Live_Demo_4K.mp4
+      - name: Production notes
+        run: |
+          cat > media/MATRA_X_Live_Demo_Production_Notes.txt <<'EOF'
+          Source: https://matra-x-vision-core.base44.app/
+          Video target: 3840x2160 UHD, 30 fps, 60 seconds, H.264.
+          Audio: cinematic 5.1 AAC mix with centered narration.
+          This is not a true Dolby Atmos object-based master. Dedicated Atmos authoring/encoding is required for Atmos metadata.
+          EOF
+      - name: Commit generated assets
+        run: |
+          rm -rf media/raw
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add reports media
+          git diff --cached --quiet && exit 0
+          git commit -m 'Publish SIH reports and live demo media [skip ci]'
+          git push
