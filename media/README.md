@@ -11,5 +11,3 @@ Video master target:
 - H.264
 - 60 seconds
 - cinematic 5.1 AAC mix with centered narration
-
-A true Dolby Atmos master requires object-based authoring and encoding with Atmos metadata. The workflow therefore uses precise 5.1 terminology rather than mislabelling the master.
