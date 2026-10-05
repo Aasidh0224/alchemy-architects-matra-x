@@ -1,66 +1,40 @@
 # ⚗️ MATRA-X — Alchemy Architects
 
-**Smart India Hackathon 2026 · SIH26099**
+**Smart India Hackathon 2026 · SIH26099**  
 **AI-Driven Standardization and Harmonization of Material Codes Across CPSEs**
 
 ## Live evaluator application
 https://matra-x-vision-core.base44.app/
 
-## What MATRA-X is
-MATRA-X is an enterprise-oriented material intelligence, standardization, harmonization and governance platform for heterogeneous CPSE material master data.
+## SIH resource vault
+Supporting documents supplied for the SIH presentation are organized under `reports/supporting/` and the Android application package is under `mobile/`.
 
-Core principle:
+### Supporting reports
+- [Idea Validation Report](reports/supporting/01_Idea_Validation_Report_MATRA_X.pdf)
+- [Flowchart Report](reports/supporting/02_Flowchart_Report_MATRA_X.pdf)
+- [Field Visit Report](reports/supporting/03_Field_Visit_Report_MATRA_X.pdf)
+- [ML & Deep Learning Algorithms Report](reports/supporting/04_ML_DL_Algorithms_Report_MATRA_X.pdf)
+- [Prediction Process Report](reports/supporting/05_Prediction_Process_Report_MATRA_X.pdf)
+- [Business & Revenue Model](reports/supporting/06_Business_Revenue_Model_MATRA_X.pdf)
+- [SWOT & Risk Matrix](reports/supporting/07_SWOT_Risk_Matrix_MATRA_X.pdf)
+- [Feasibility Assessment](reports/supporting/08_Feasibility_Assessment_MATRA_X.pdf)
 
+### Mobile application
+- `mobile/Matra-X.apk` — Android package supplied by the team.
+
+## Core MATRA-X principle
 **Understand → Compare → Challenge → Explain → Govern → Prevent → Optimize**
 
-## Current application inventory
-- Command Center
-- AI Standardization
-- Error Detection
-- Biometric Authentication / authentication activity
-- Material Catalog
-- Cross-CPSE Insights
-- LIORA Material Intelligence Copilot
-- Event / Scan activity
-
-## Engineering capabilities documented for SIH
-- Engineering DNA 2.0
-- Hybrid lexical + semantic + structured attribute matching
-- Contradiction-aware False-Merge Firewall
-- Evidence fusion and provenance
-- Uncertainty-aware decisions
-- Human-in-the-loop governance
-- Canonical material identity and proposed common-code mapping
-- Legacy mapping and pre-entry duplicate prevention
-- Procurement and inventory intelligence
-- Million-scale architecture
-- Research benchmark and hard-negative evaluation
+MATRA-X is an enterprise-oriented material intelligence, standardization, harmonization and governance platform for heterogeneous CPSE material master data.
 
 ## Current application reference
-The live Base44 application is the product reference for the interface and workflow. The public URL does not expose the private source tree. This repository therefore does not pretend that reconstructed files are the original private application source. It contains the current MATRA-X SIH submission documentation, analysis, deployment assets and reproducibility automation.
+The live Base44 application is the product reference for the interface and workflow. The public URL does not expose the private Base44 source tree. This repository therefore does not pretend that reconstructed files are the original private application source.
 
 ## Data discipline
 Every dataset and metric used by the team must be labelled REAL, PUBLIC, SYNTHETIC, SIMULATED or DEMO. Prototype records must not be represented as confidential CPSE production data without independent provenance.
 
-## Repository structure
-docs/TECHNICAL_REPORT.md — detailed technical report
-docs/USER_MANUAL.md — evaluator/user manual
-docs/APPLICATION_ANALYSIS.md — current app analysis
-docs/DATA_DICTIONARY.md — observed entity model
-docs/TECH_STACK.md — current platform and independent engineering stack
-docs/ARCHITECTURE.md — target technical architecture
-docs/SIH_ALIGNMENT.md — PS-to-feature mapping
-docs/RESEARCH_AND_VALIDATION.md — research and benchmark plan
-docs/JUDGE_DEMO_GUIDE.md — recommended live demonstration flow
-docs/REFERENCES.md — literature and official references
-docs/DEPLOYMENT.md — deployment and live-demo automation
-reports/ — generated PDF report and manual
-media/ — generated live-demo video and production notes
-tools/ — browser capture automation
-scripts/ — PDF build automation
-
-## Automated SIH assets
-GitHub Actions generates the reviewer-ready PDF report, user manual and a live 4K browser-capture video from the current public application.
+## Documentation
+The repository also contains the current SIH technical, architecture, data dictionary, deployment, research, alignment and judge-demo documentation under `docs/`.
 
 ## Team
 Alchemy Architects
